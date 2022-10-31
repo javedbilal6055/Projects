@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 
 function WeatherForecast() {
@@ -20,10 +20,9 @@ function WeatherForecast() {
       console.log(error);
     }
   }
-  // useEffect(() => {
-
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getData();
+  },[]);
 
   return (
     <>
@@ -74,6 +73,7 @@ function WeatherForecast() {
           </label>
         </div>
       </div>
+      
     </>
   );
 }

@@ -1,6 +1,7 @@
-import { Box, Container, IconButton, Typography } from "@mui/material";
+import { Box, Container, IconButton, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import { UserName } from "../App";
 
 function DragBall() {
   const [posTop, setPosTop] = useState(0);
@@ -55,79 +56,104 @@ function DragBall() {
 
   return (
     <>
-      <Container
-        maxWidth="lg"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          marginTop: "100px",
-          alignItems:"center",
-        }}
-      >
-        <Typography variant="h6" mt="2" value="center" aria-label="centered">
-          Drag The Ball
-        </Typography>
-        <Box
-          sx={{
-            height: "400px",
-            width: "50%",
-            border: "1px solid",
-            margin: "auto",
-            marginTop: "10px",
-            position: "relative",
-          }}
-        >
-          <IconButton
-            sx={{
-              position: "absolute",
-              top: `${posTop}%`,
-              left: `${posLeft}%`,
-              transition: "2s",
-            }}
-            onClick={() => {
-              if (flag === 6) {
-                setFlag(1);
-              } else {
-                setFlag(flag + 1);
-              }
-              handlePosition();
-            }}
-          >
-            <SportsSoccerIcon
+      <UserName.Consumer>
+        {(user) => {
+          return (
+            <Container
+              maxWidth="lg"
               sx={{
-                fontSize: "50px",
-                color: "red",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginTop: "100px",
+                alignItems: "center",
               }}
-            ></SportsSoccerIcon>
-          </IconButton>
-          <Typography
-            sx={{
-              width: "50px",
-              height: "30px",
-              margin: "auto",
-              textAlign: "center",
-              marginTop: "180px",
-              backgroundColor: "black",
-              color: "white",
-              padding: "5px",
-            }}
-          >
-            {flag - 1}
-          </Typography>
-        </Box>
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  backgroundColor: "black",
+                  color: "white",
+                  textAlign: "end",
+                  padding: "3px",
+                  paddingRight: "15px",
+                }}
+              >
+                <Tooltip title="use of context api" placement="bottom-end">
+                  <Typography sx={{color:'gold'}}>{"User : " + user}</Typography>
+                </Tooltip>
+              </Box>
+              <Typography
+                variant="h6"
+                mt="2"
+                value="center"
+                aria-label="centered"
+              >
+                Drag The Ball
+              </Typography>
+              <Box
+                sx={{
+                  height: "400px",
+                  width: "50%",
+                  border: "1px solid",
+                  margin: "auto",
+                  marginTop: "10px",
+                  position: "relative",
+                }}
+              >
+                <IconButton
+                  sx={{
+                    position: "absolute",
+                    top: `${posTop}%`,
+                    left: `${posLeft}%`,
+                    transition: "2s",
+                  }}
+                  onClick={() => {
+                    if (flag === 6) {
+                      setFlag(1);
+                    } else {
+                      setFlag(flag + 1);
+                    }
+                    handlePosition();
+                  }}
+                >
+                  <SportsSoccerIcon
+                    sx={{
+                      fontSize: "50px",
+                      color: "red",
+                    }}
+                  ></SportsSoccerIcon>
+                </IconButton>
+                <Typography
+                  sx={{
+                    width: "50px",
+                    height: "30px",
+                    margin: "auto",
+                    textAlign: "center",
+                    marginTop: "180px",
+                    backgroundColor: "black",
+                    color: "white",
+                    padding: "5px",
+                  }}
+                >
+                  {'pos:'+(flag - 1)}
+                </Typography>
+              </Box>
 
-        {/* <Button
+              {/* <Button
           variant="contained"
           color="success"
           sx={{
             margin: "auto",
             marginTop:"10px"
           }}
-        >
+          >
           Drag
         </Button> */}
-      </Container>
+            </Container>
+          );
+        }}
+      </UserName.Consumer>
     </>
   );
 }

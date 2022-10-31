@@ -6,6 +6,7 @@ import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { Link, Outlet } from 'react-router-dom';
 import { Container } from '@mui/system';
+import FeedIcon from '@mui/icons-material/Feed';
 
 function Header() {
   return (
@@ -45,6 +46,11 @@ function Header() {
           <Button variant="">
             <Link to='/ToDoList'  style={{color:"white"}}>
             <PlaylistAddIcon/>
+            </Link>
+          </Button>
+          <Button variant="">
+            <Link to='/FormSubmit'  style={{color:"white"}}>
+            <FeedIcon/>
             </Link>
           </Button>
         </Toolbar>
