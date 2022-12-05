@@ -10,33 +10,50 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-
 function Details() {
+ 
   const [formValues,setFormValues]=useState({
     name:'',
-    trips:0,
-    airline:0,
+    gender:'',
+    email:'',
+    status:'active',
   });
-  const [msg,setMsg]=useState('no values');
+  const [msg,setMsg]=useState('');
 const changeValues=(event)=>{
   console.log([event.target.name], event.target.value);
   setFormValues({ ...formValues, [event.target.name] : event.target.value});
 }
-const apiUrl='https://api.instantwebtools.net/v1/passenger';
+const apiUrl='https://gorest.co.in/public/v2/users';
+const token='d02a82a03445b221b77e651bafa953885e2c0a701b467fbef97ad32dc4602f40';
 const handleSubmit=async()=>{
   console.log("working",formValues);
     try {
       await axios.post(
         apiUrl,
-        formValues
+        formValues,
+        {
+          headers:{
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+          
+        }
       )
       .then((response) => {
-        setMsg(response);
+        console.log(response);
+        if(response.status===201)
+        {
+          setMsg(response.status+' user created');
+        }
+        if(response.status===202)
+        {
+          setMsg(response.status+' email id is already taken');
+        }
       });
 
     } catch (error) {
-      setMsg(error);
-      console.log(error);
+      console.log('error is coming! unable to perform  ',error.message);
+      setMsg(error.message);
     }
 }
   return (
@@ -70,11 +87,11 @@ const handleSubmit=async()=>{
         </FormControl>
         <FormControl sx={{ m: 1, width: "47%" }}>
           <TextField
-            label="Number Of Trips"
+            label="Gender"
             id="outlined-start-adornment"
-            name='trips'
-            type='number'
-            value={formValues.trips}
+            name='gender'
+            
+            value={formValues.gender}
             onChange={(event)=>{changeValues(event)}}
             InputProps={{
               startAdornment: (
@@ -86,25 +103,26 @@ const handleSubmit=async()=>{
           />
         </FormControl>
         <FormControl sx={{ m: 1, width: "96%" }}>
-          <InputLabel htmlFor="outlined-adornment-address">Adress</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-address">Email</InputLabel>
           <OutlinedInput
-            id="outlined-adornment-airline"
-            type='number'
-            name='airline'
+            id="outlined-adornment-email"
+           type="email"
+            name='email'
             onChange={(event)=>{changeValues(event)}}
             startAdornment={<InputAdornment position="start">
               
             </InputAdornment>}
-            value={formValues.airline}
+            value={formValues.email}
             label="airline"
           />
         </FormControl>
-        {/* <FormControl sx={{ m: 1, width: "47%" }}>
+        <FormControl sx={{ m: 1, width: "47%" }}>
           <TextField
-            label="Mobile No:"
+            label="Status"
             id="outlined-start-adornment"
-            name='mobile'
-            value={ formValues.mobile}
+            name='status'
+           
+            value={ formValues.status}
             onChange={(event)=>{changeValues(event)}}
             InputProps={{
               startAdornment: (
@@ -114,7 +132,7 @@ const handleSubmit=async()=>{
               ),
             }}
           />
-        </FormControl> */}
+        </FormControl>
         {/* <FormControl sx={{ m: 1, width: "47%" }}>
           <TextField
             label="Email Id:"
