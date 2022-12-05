@@ -49,11 +49,11 @@ function WeatherForecast() {
           style={{
             margin: "auto",
             marginTop: "50px",
-            width: "500px",
-            height: "250px",
+            width:"40vw",
+            height: "30vh",
             backgroundColor: "red",
             display: "flex",
-            justifycontentCenter: "center",
+            justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
           }}
